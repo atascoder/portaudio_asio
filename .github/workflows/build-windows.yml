@@ -14,16 +14,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Configure CMake
+    - name: Create build directory
       run: |
         cd portaudio
-        mkdir build
-        cd build
+        mkdir -p build
+
+    - name: Configure CMake
+      working-directory: portaudio/build
+      run: |
         cmake .. -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release
 
     - name: Build PortAudio
+      working-directory: portaudio/build
       run: |
-        cd portaudio/build
         cmake --build . --config Release -j 4
 
     - name: Create artifacts directory
@@ -32,8 +35,8 @@ jobs:
     - name: Copy DLL artifacts
       shell: pwsh
       run: |
-        Copy-Item "portaudio/build/Release/portaudio.dll" -Destination "artifacts/portaudio.dll"
-        Copy-Item "portaudio/build/Release/portaudio.lib" -Destination "artifacts/portaudio.lib"
+        Copy-Item "portaudio/build/Release/portaudio.dll" -Destination "artifacts/portaudio.dll" -ErrorAction SilentlyContinue
+        Copy-Item "portaudio/build/Release/portaudio.lib" -Destination "artifacts/portaudio.lib" -ErrorAction SilentlyContinue
         Get-ChildItem artifacts/
 
     - name: Upload artifacts
