@@ -17,6 +17,21 @@ jobs:
         submodules: false
         fetch-depth: 0
 
+    - name: Initialize portaudio submodule
+      shell: pwsh
+      run: |
+        Write-Host "Initializing portaudio submodule..."
+        git submodule init portaudio
+        git submodule update --init --recursive portaudio --depth 1 2>&1 | Tee-Object -Variable output
+        
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "Submodule update failed, trying to clone directly..."
+          if (Test-Path "portaudio") {
+            Remove-Item -Recurse -Force portaudio
+          }
+          git clone --depth 1 https://github.com/PortAudio/portaudio.git portaudio
+        }
+
     - name: Check directory structure
       shell: pwsh
       run: |
