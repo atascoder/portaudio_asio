@@ -78,8 +78,8 @@ jobs:
           New-Item -ItemType Directory -Path "build" | Out-Null
         }
         
-        Write-Host "Running CMake configure..."
-        cmake -B build -S . -G "Visual Studio 17 2022" -A x64
+        Write-Host "Running CMake configure with ASIO enabled..."
+        cmake -B build -S . -G "Visual Studio 17 2022" -A x64 -DPA_USE_ASIO=ON
         
         if ($LASTEXITCODE -ne 0) {
           Write-Host "CMake configure failed!"
