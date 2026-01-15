@@ -30,21 +30,22 @@ cmake --build . --config Release
 
 ### 3️⃣ Посмотреть логи
 
-**Способ А - PowerShell (рекомендуется):**
+**Способ А - Самый простой:**
+```
+1. Откройте папку где лежит ваше приложение
+2. Найдите файл: portaudio_asio_debug.log
+3. Откройте его Блокнотом
+```
+
+**Способ Б - PowerShell:**
 ```powershell
-notepad $env:USERPROFILE\AppData\Local\portaudio_asio_debug.log
+Get-Content portaudio_asio_debug.log -Tail 50
 ```
 
-**Способ Б - Напрямую:**
+**Способ В - Command Prompt:**
+```cmd
+type portaudio_asio_debug.log
 ```
-C:\Users\<ВашИмя>\AppData\Local\portaudio_asio_debug.log
-```
-
-**Способ В - File Explorer:**
-1. Нажмите `Windows + E`
-2. В адресе напишите: `%USERPROFILE%\AppData\Local`
-3. Найдите `portaudio_asio_debug.log`
-4. Откройте Блокнотом
 
 ## 🎯 Что ищем в логе?
 

@@ -37,19 +37,22 @@
 
 ### 4. Найти и открыть лог
 
-На **Windows**:
+На **Windows** - просто найдите файл в папке приложения:
 
 ```
-C:\Users\<ВашИмя>\AppData\Local\portaudio_asio_debug.log
+portaudio_asio_debug.log
 ```
 
-Или используйте команду в PowerShell:
+Он будет создан в **текущей папке** где запущено приложение.
+
+**Открыть в PowerShell:**
 ```powershell
-# Открыть в блокноте
-notepad $env:USERPROFILE\AppData\Local\portaudio_asio_debug.log
+Get-Content portaudio_asio_debug.log
+```
 
-# Или просмотреть в PowerShell
-Get-Content $env:USERPROFILE\AppData\Local\portaudio_asio_debug.log -Tail 100  # последние 100 строк
+**Или просто открыть в Блокноте:**
+```
+Папка приложения → portaudio_asio_debug.log (двойной щелчок)
 ```
 
 ## Что ищем в логе
