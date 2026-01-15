@@ -78,8 +78,17 @@ jobs:
           New-Item -ItemType Directory -Path "build" | Out-Null
         }
         
+        # Set ASIO_SDK_PATH to the asio directory in the repository
+        $asioPath = Resolve-Path "$PWD/../asio" -ErrorAction SilentlyContinue
+        if ($null -eq $asioPath) {
+          Write-Host "ASIO directory not found!"
+          exit 1
+        }
+        
+        Write-Host "Using ASIO SDK from: $asioPath"
+        
         Write-Host "Running CMake configure with ASIO enabled..."
-        cmake -B build -S . -G "Visual Studio 17 2022" -A x64 -DPA_USE_ASIO=ON
+        cmake -B build -S . -G "Visual Studio 17 2022" -A x64 -DPA_USE_ASIO=ON -DCMAKE_PREFIX_PATH="$asioPath"
         
         if ($LASTEXITCODE -ne 0) {
           Write-Host "CMake configure failed!"
