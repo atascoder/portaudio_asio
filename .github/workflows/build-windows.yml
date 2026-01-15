@@ -25,6 +25,7 @@ jobs:
     - name: Configure CMake (x64)
       if: matrix.arch == 'x64'
       run: |
+        cd portaudio
         mkdir build
         cd build
         cmake .. -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release
@@ -32,13 +33,14 @@ jobs:
     - name: Configure CMake (Win32)
       if: matrix.arch == 'Win32'
       run: |
+        cd portaudio
         mkdir build
         cd build
         cmake .. -G "Visual Studio 17 2022" -A Win32 -DCMAKE_BUILD_TYPE=Release
 
     - name: Build PortAudio
       run: |
-        cd build
+        cd portaudio/build
         cmake --build . --config Release -j 4
 
     - name: Create artifacts directory
@@ -48,16 +50,16 @@ jobs:
       if: matrix.arch == 'x64'
       shell: pwsh
       run: |
-        Copy-Item "build/Release/portaudio.dll" -Destination "artifacts/portaudio_x64.dll"
-        Copy-Item "build/Release/portaudio.lib" -Destination "artifacts/portaudio_x64.lib"
+        Copy-Item "portaudio/build/Release/portaudio.dll" -Destination "artifacts/portaudio_x64.dll"
+        Copy-Item "portaudio/build/Release/portaudio.lib" -Destination "artifacts/portaudio_x64.lib"
         Get-ChildItem artifacts/
 
     - name: Copy DLL artifacts (Win32)
       if: matrix.arch == 'Win32'
       shell: pwsh
       run: |
-        Copy-Item "build/Release/portaudio.dll" -Destination "artifacts/portaudio_win32.dll"
-        Copy-Item "build/Release/portaudio.lib" -Destination "artifacts/portaudio_win32.lib"
+        Copy-Item "portaudio/build/Release/portaudio.dll" -Destination "artifacts/portaudio_win32.dll"
+        Copy-Item "portaudio/build/Release/portaudio.lib" -Destination "artifacts/portaudio_win32.lib"
         Get-ChildItem artifacts/
 
     - name: Upload artifacts
