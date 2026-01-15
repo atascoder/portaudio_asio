@@ -13,18 +13,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up MSVC environment
-      uses: microsoft/setup-msbuild@v1
-
     - name: Create artifacts folder
       run: mkdir artifacts
 
     - name: Compile PortAudio DLL
+      shell: cmd
       run: |
-        cl /LD /I include /Fe:artifacts/portaudio.dll src\*.cpp
+        REM Настроить переменные среды для MSVC x64
+        "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x64
+
+        REM Собрать DLL
+        cl /LD /I include /Fe:artifacts\portaudio.dll src\*.cpp /DPA_CHANNELS=4
+
+        REM Опция /DPA_CHANNELS=4 — пример, можно заменить на нужные тебе флаги
 
     - name: Upload DLL artifact
       uses: actions/upload-artifact@v4
       with:
         name: portaudio-dll
-        path: artifacts/portaudio.dll
+        path: artifacts\portaudio.dll
