@@ -33,6 +33,16 @@ cmake .. -G "Unix Makefiles"
 make -j4
 ```
 
+## 🔍 How to Debug (Все еще звук идет в неправильные каналы?)
+
+1. **Скомпилируйте новую DLL** с файловым логированием
+2. **Замените вашу текущую portaudio.dll** 
+3. **Откройте лог** в: `C:\Users\<YourName>\AppData\Local\portaudio_asio_debug.log`
+
+**Подробные инструкции:**
+- [HOW_TO_DEBUG.md](HOW_TO_DEBUG.md) - Полное руководство по отладке
+- [LOG_LOCATION.md](LOG_LOCATION.md) - Где найти лог файл и как его открыть
+
 ## Understanding the Fix
 
 The issue and solution are explained in detail in [SOLUTION_EXPLANATION.md](SOLUTION_EXPLANATION.md).
@@ -45,7 +55,7 @@ The issue and solution are explained in detail in [SOLUTION_EXPLANATION.md](SOLU
 - **Key Changes**: 
   - Hardcoded output channel selector to channels 3-4 (indices 2-3)
   - Implemented proper ASIO buffer index mapping after ASIOCreateBuffers()
-  - Added comprehensive debug logging for troubleshooting
+  - Added comprehensive debug logging to file: `portaudio_asio_debug.log`
 
 ### For Deep Understanding
 
